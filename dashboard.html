@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AppWorks Ecosystem Stats 26H1 (AW#32)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f5f0e8;
+  --surface: #ffffff;
+  --surface-2: #ece7df;
+  --border: #d9d3c7;
+  --text: #1a1a1a;
+  --text-muted: #6b6560;
+  --accent: #ee7a2f;
+  --accent-glow: rgba(238, 122, 47, 0.12);
+  --green: #16a34a;
+  --red: #dc2626;
+  --skeleton: linear-gradient(90deg, #ece7df 25%, #e3ddd4 50%, #ece7df 75%);
+  --radius: 12px;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* Header */
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+header h1 {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+header h1 span {
+  color: var(--accent);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.controls input {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  width: 280px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.controls input:focus {
+  border-color: var(--accent);
+}
+
+.controls input::placeholder {
+  color: var(--text-muted);
+}
+
+.btn {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.btn:hover { opacity: 0.9; }
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Status bar */
+.status-bar {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 8px 0;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-bar .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.status-bar.loading .dot { background: var(--accent); animation: pulse 1s ease-in-out infinite; }
+.status-bar.success .dot { background: var(--green); }
+.status-bar.error .dot { background: var(--red); }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Sections */
+.section {
+  margin-bottom: 48px;
+}
+
+.section-header {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-number {
+  font-family: 'DM Mono', monospace;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Metric cards */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: border-color 0.2s;
+}
+
+.card:hover {
+  border-color: var(--accent);
+}
+
+.card-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.card-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.card-subtitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.card-yoy {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+}
+
+.yoy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 11px;
+}
+
+.yoy-badge.positive {
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--green);
+}
+
+.yoy-badge.negative {
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--red);
+}
+
+.yoy-badge.neutral {
+  background: rgba(107, 101, 96, 0.12);
+  color: var(--text-muted);
+}
+
+.yoy-abs {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+/* Ranked lists */
+.ranked-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.ranked-list {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.ranked-list-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ranked-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 13px;
+}
+
+.ranked-item + .ranked-item {
+  border-top: 1px solid rgba(42, 42, 50, 0.5);
+}
+
+.rank-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  width: 20px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.rank-name {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.rank-value.positive { color: var(--green); }
+.rank-value.negative { color: var(--red); }
+
+.rank-batch {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--border);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Skeleton */
+.skeleton {
+  background: var(--skeleton);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+.skeleton-value {
+  height: 36px;
+  width: 70%;
+  margin-bottom: 8px;
+}
+
+.skeleton-subtitle {
+  height: 14px;
+  width: 40%;
+}
+
+.skeleton-row {
+  height: 16px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Lookup */
+.lookup-box {
+  position: relative;
+  max-width: 420px;
+  margin-bottom: 20px;
+}
+
+.lookup-input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.lookup-input:focus { border-color: var(--accent); }
+.lookup-input::placeholder { color: var(--text-muted); }
+
+.lookup-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+.lookup-option {
+  padding: 9px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.1s;
+}
+
+.lookup-option:hover, .lookup-option.active {
+  background: var(--surface-2);
+}
+
+.lookup-option .rank-batch {
+  font-size: 9px;
+}
+
+.lookup-result {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.lookup-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.lookup-table th {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-align: right;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.lookup-table th:first-child {
+  text-align: left;
+}
+
+.lookup-table td {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  padding: 10px 16px;
+  text-align: right;
+  border-bottom: 1px solid rgba(42,42,50,0.3);
+  color: var(--text);
+}
+
+.lookup-table td:first-child {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  text-align: left;
+  color: var(--text-muted);
+}
+
+.lookup-table tr:last-child td { border-bottom: none; }
+
+.lookup-change-pos { color: var(--green); }
+.lookup-change-neg { color: var(--red); }
+
+.lookup-company-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.lookup-company-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Tabs */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+
+.tab-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.tab-page { display: none; }
+.tab-page.active { display: block; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .cards-grid, .ranked-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .cards-grid, .ranked-grid { grid-template-columns: 1fr; }
+  header { flex-direction: column; align-items: flex-start; }
+  .controls { margin-left: 0; width: 100%; }
+  .controls input { flex: 1; }
+  .tab-btn { padding: 8px 12px; font-size: 11px; }
+}
+
+/* Hidden */
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>AppWorks <span>Ecosystem Stats 26H1 (AW#32)</span></h1>
+    <div class="controls">
+      <input type="password" id="apiKey" placeholder="Airtable API key or PAT" autocomplete="off">
+      <button class="btn" id="loadBtn" onclick="loadDashboard()">Load</button>
+    </div>
+  </header>
+
+  <div class="status-bar" id="statusBar">
+    <div class="dot"></div>
+    <span id="statusText">Enter your API key and press Load</span>
+  </div>
+
+  <div id="dashboard" class="hidden">
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="general">General</button>
+      <button class="tab-btn" data-tab="ai">AI Companies</button>
+      <button class="tab-btn" data-tab="web3">Web3</button>
+    </div>
+
+    <!-- Tab: General -->
+    <div class="tab-page active" id="page-general">
+      <div class="section">
+        <div class="section-header"><span class="section-number">01</span> General Snapshot</div>
+        <div class="cards-grid" id="cards-general"></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="section-number">02</span> Top 10 by Latest Metrics</div>
+        <div class="ranked-grid" id="top10-general"></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="section-number">03</span> Top 10 Absolute Change — 26H1 vs 25H1</div>
+        <div class="ranked-grid" id="change-general"></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="section-number">04</span> Company Lookup</div>
+        <div class="lookup-box" data-tab-scope="general">
+          <input class="lookup-input" type="text" placeholder="Search company…" autocomplete="off">
+          <div class="lookup-dropdown hidden"></div>
+        </div>
+        <div class="lookup-result-container"></div>
+      </div>
+    </div>
+
+    <!-- Tab: AI -->
+    <div class="tab-page" id="page-ai">
+      <div class="section">
+        <div class="section-header"><span class="section-number">01</span> AI Companies Snapshot</div>
+        <div class="cards-grid" id="cards-ai"></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="section-number">02</span> Top 10 by Latest Metrics</div>
+        <div class="ranked-grid" id="top10-ai"></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="section-number">03</span> Top 10 Absolute Change — 26H1 vs 25H1</div>
+        <div class="ranked-grid" id="change-ai"></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="section-number">04</span> Company Lookup</div>
+        <div class="lookup-box" data-tab-scope="ai">
+          <input class="lookup-input" type="text" placeholder="Search AI company…" autocomplete="off">
+          <div class="lookup-dropdown hidden"></div>
+        </div>
+        <div class="lookup-result-container"></div>
+      </div>
+    </div>
+
+    <!-- Tab: Web3 -->
+    <div class="tab-page" id="page-web3">
+      <div class="section">
+        <div class="section-header"><span class="section-number">01</span> Web3 Companies Snapshot</div>
+        <div class="cards-grid" id="cards-web3"></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="section-number">02</span> Top 10 by Latest Metrics</div>
+        <div class="ranked-grid" id="top10-web3"></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="section-number">03</span> Top 10 Absolute Change — 26H1 vs 25H1</div>
+        <div class="ranked-grid" id="change-web3"></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><span class="section-number">04</span> Company Lookup</div>
+        <div class="lookup-box" data-tab-scope="web3">
+          <input class="lookup-input" type="text" placeholder="Search Web3 company…" autocomplete="off">
+          <div class="lookup-dropdown hidden"></div>
+        </div>
+        <div class="lookup-result-container"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const BASE_ID = 'appKg1PG4KurhvyIK';
+const COMPANIES_TABLE = 'Companies';
+const STATS_TABLE = 'Ecosystem Stats';
+
+function normalizeText(value) {
+  return String(value ?? '').trim();
+}
+
+const VALID_BATCHES = new Set([
+  'PORTFOLIO',
+  ...Array.from({ length: 9 }, (_, i) => `AW#0${i + 1}`),
+  ...Array.from({ length: 23 }, (_, i) => `AW#${i + 10}`)
+]);
+
+function isValidBatchName(batchName) {
+  const normalized = normalizeText(batchName).toUpperCase();
+  if (!normalized) return false;
+  return VALID_BATCHES.has(normalized);
+}
+
+const METRICS = [
+  { key: 'Latest Raised',    h1Key: 'raised',    label: 'Total Raised',    format: formatCurrency },
+  { key: 'Latest Valuation', h1Key: 'valuation', label: 'Total Valuation',  format: formatCurrency },
+  { key: 'Latest Revenue',   h1Key: 'revenue',   label: 'Total Revenue',    format: formatCurrency },
+  { key: 'Latest Staff',     h1Key: 'staff',     label: 'Total Staff',      format: formatStaff },
+];
+
+/* ── Number formatting ── */
+
+function formatCurrency(val) {
+  if (val == null) return '—';
+  const abs = Math.abs(val);
+  const sign = val < 0 ? '-' : '';
+  let num;
+  if (abs >= 1e9)       num = `${(abs / 1e9).toFixed(2).replace(/\.?0+$/, '')}B`;
+  else if (abs >= 1e6)  num = `${(abs / 1e6).toFixed(1).replace(/\.?0+$/, '')}M`;
+  else if (abs >= 1e3)  num = `${(abs / 1e3).toFixed(0)}K`;
+  else                  num = `${abs.toFixed(0)}`;
+  return `${sign}$${num}`;
+}
+
+function formatStaff(val) {
+  if (val == null) return '—';
+  const abs = Math.abs(val);
+  const sign = val < 0 ? '-' : '';
+  if (abs >= 1e3) return `${sign}${(abs / 1e3).toFixed(1).replace(/\.?0+$/, '')}K`;
+  return val.toLocaleString();
+}
+
+function formatChange(val, formatter) {
+  if (val == null) return '—';
+  const prefix = val > 0 ? '+' : '';
+  return prefix + formatter(val);
+}
+
+/* ── Airtable fetching with pagination + retry ── */
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const RETRYABLE = new Set([401, 403, 408, 429, 500, 502, 503]);
+
+async function fetchWithRetry(url, headers, context, maxRetries = 6) {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const res = await fetch(url, { headers });
+    if (RETRYABLE.has(res.status) && attempt < maxRetries) {
+      const wait = Math.min(1500 * Math.pow(2, attempt), 30000);
+      setStatus('loading', `${context} — got ${res.status}, retry ${attempt + 1}/${maxRetries} in ${(wait / 1000).toFixed(0)}s…`);
+      await sleep(wait);
+      continue;
+    }
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(`[${context}] ${body.error?.message || `HTTP ${res.status}`}`);
+    }
+    return res;
+  }
+  throw new Error(`[${context}] Too many retries`);
+}
+
+async function fetchAllRecords(apiKey, tableName, fields) {
+  const url = new URL(`https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(tableName)}`);
+  fields.forEach(f => url.searchParams.append('fields[]', f));
+  const headers = { Authorization: `Bearer ${apiKey}` };
+  let allRecords = [], offset = null, page = 0;
+  do {
+    const pageUrl = new URL(url);
+    if (offset) pageUrl.searchParams.set('offset', offset);
+    if (page > 0) await sleep(250);
+    const ctx = `${tableName} p${page + 1}`;
+    setStatus('loading', `Fetching ${ctx}… (${allRecords.length} records so far)`);
+    const res = await fetchWithRetry(pageUrl.toString(), headers, ctx);
+    const data = await res.json();
+    allRecords = allRecords.concat(data.records);
+    offset = data.offset || null;
+    page++;
+  } while (offset);
+  return allRecords;
+}
+
+/* ── Filtering ── */
+
+function filterCompanies(records) {
+  let onPassCount = 0, batchPassCount = 0;
+  const unmatchedBatchNames = new Set();
+  const filtered = records.filter(r => {
+    const f = r.fields;
+    const onField = f['On'];
+    if (!onField) return false;
+    const onName = normalizeText(typeof onField === 'object' && onField.name ? onField.name : onField);
+    if (onName !== '1') return false;
+    onPassCount++;
+    const batchField = f['Batch'];
+    if (!batchField || !Array.isArray(batchField)) return false;
+    const batchNames = batchField.map(v => normalizeText(typeof v === 'object' && v.name ? v.name : v));
+    const batchPass = batchNames.some(isValidBatchName);
+    if (batchPass) { batchPassCount++; } else { batchNames.filter(Boolean).forEach(n => unmatchedBatchNames.add(n)); }
+    return batchPass;
+  });
+  return { filtered, debug: { total: records.length, onPassCount, batchPassCount, bothPassCount: filtered.length, unmatchedBatchSample: Array.from(unmatchedBatchNames).sort().slice(0, 8) } };
+}
+
+function filterAI(companies) {
+  return companies.filter(c => {
+    const label = c.fields['AI Label'];
+    if (!label) return false;
+    const name = typeof label === 'object' && label.name ? label.name : String(label);
+    return name === 'AI-native' || name === 'AI-enabled';
+  });
+}
+
+function filterWeb3(companies) {
+  return companies.filter(c => {
+    const verticals = c.fields['Company Verticals'];
+    if (!verticals || !Array.isArray(verticals)) return false;
+    return verticals.some(v => {
+      const name = typeof v === 'object' && v.name ? v.name : String(v);
+      return name === 'Web3';
+    });
+  });
+}
+
+/* ── Build lookup maps ── */
+
+function buildRecordIdToName(companyRecords) {
+  const map = {};
+  for (const r of companyRecords) { map[r.id] = r.fields['Company Name'] || r.id; }
+  return map;
+}
+
+function buildH1Lookup(statsRecords, idToName) {
+  const map = {};
+  for (const r of statsRecords) {
+    const f = r.fields;
+    if (f['Period'] !== '25H1') continue;
+    const linked = f['Company Name'];
+    if (!linked || !Array.isArray(linked) || linked.length === 0) continue;
+    const rawId = typeof linked[0] === 'object' ? (linked[0].id || linked[0].name || String(linked[0])) : String(linked[0]);
+    const name = (idToName && idToName[rawId]) || rawId;
+    map[name] = { raised: f['Total Raised'] ?? null, valuation: f['Valuation'] ?? null, revenue: f['Revenue'] ?? null, staff: f['Staff'] ?? null };
+  }
+  return map;
+}
+
+function getBatchLabel(company) {
+  const batchField = company.fields['Batch'];
+  if (!batchField || !Array.isArray(batchField)) return '';
+  const names = batchField.map(v => normalizeText(typeof v === 'object' && v.name ? v.name : v));
+  const aw = names.find(n => /^AW#/i.test(n));
+  if (aw) return aw;
+  if (names.some(n => n.toUpperCase() === 'PORTFOLIO')) return 'Portfolio';
+  return names[0] || '';
+}
+
+function buildBatchMap(companies) {
+  const map = {};
+  companies.forEach(c => { const name = c.fields['Company Name']; if (name) map[name] = getBatchLabel(c); });
+  return map;
+}
+
+/* ── Rendering helpers ── */
+
+function renderSkeletonCards(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = Array.from({ length: METRICS.length + 1 }).map(() => `
+    <div class="card">
+      <div class="card-label skeleton" style="height:12px;width:60%;margin-bottom:14px"></div>
+      <div class="skeleton skeleton-value"></div>
+    </div>
+  `).join('');
+}
+
+function renderSkeletonRanked(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = METRICS.map(() => `
+    <div class="ranked-list">
+      <div class="ranked-list-title skeleton" style="height:12px;width:50%;border:none;padding:0;margin-bottom:16px"></div>
+      ${Array(10).fill('<div class="skeleton skeleton-row"></div>').join('')}
+    </div>
+  `).join('');
+}
+
+function buildYoyHtml(latest, prev, formatter) {
+  if (prev == null || prev === 0 || latest == null) return '';
+  const change = latest - prev;
+  const pct = (change / Math.abs(prev)) * 100;
+  const cls = change > 0 ? 'positive' : change < 0 ? 'negative' : 'neutral';
+  const arrow = change > 0 ? '↑' : change < 0 ? '↓' : '→';
+  const pctStr = `${arrow} ${Math.abs(pct).toFixed(1)}%`;
+  const absStr = formatChange(change, formatter);
+  return `<div class="card-yoy"><span class="yoy-badge ${cls}">${pctStr}</span><span class="yoy-abs">${absStr} vs 25H1</span></div>`;
+}
+
+function renderMetricCards(containerId, companies, h1Lookup) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const count = companies.length;
+  let prevCount = null;
+  if (h1Lookup) {
+    prevCount = companies.filter(c => h1Lookup[c.fields['Company Name']]).length;
+  }
+  const startupYoy = h1Lookup ? buildYoyHtml(count, prevCount, v => Math.abs(v).toLocaleString()) : '';
+  const startupDetail = prevCount != null
+    ? `<div class="card-subtitle">26H1: ${count} / 25H1: ${prevCount}</div>`
+    : '';
+  const activeCard = `<div class="card"><div class="card-label">Active Startups</div><div class="card-value">${count.toLocaleString()}</div>${startupDetail}${startupYoy}</div>`;
+  const metricCards = METRICS.map(m => {
+    const latestSum = companies.reduce((acc, c) => acc + (c.fields[m.key] || 0), 0);
+    let prevSum = null;
+    if (h1Lookup) {
+      let s = 0, hasAny = false;
+      companies.forEach(c => { const h1 = h1Lookup[c.fields['Company Name']]; if (h1 && h1[m.h1Key] != null) { s += h1[m.h1Key]; hasAny = true; } });
+      if (hasAny) prevSum = s;
+    }
+    const yoyHtml = h1Lookup ? buildYoyHtml(latestSum, prevSum, m.format) : '';
+    return `<div class="card"><div class="card-label">${m.label}</div><div class="card-value">${m.format(latestSum)}</div>${yoyHtml}</div>`;
+  }).join('');
+  el.innerHTML = activeCard + metricCards;
+}
+
+function renderRankedList(containerId, companies, h1Lookup, isChange, batchMap) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const metricConfigs = [
+    { key: 'Latest Raised', h1Key: 'raised', label: isChange ? 'Raised Change' : 'Raised', format: formatCurrency },
+    { key: 'Latest Valuation', h1Key: 'valuation', label: isChange ? 'Valuation Change' : 'Valuation', format: formatCurrency },
+    { key: 'Latest Revenue', h1Key: 'revenue', label: isChange ? 'Revenue Change' : 'Revenue', format: formatCurrency },
+    { key: 'Latest Staff', h1Key: 'staff', label: isChange ? 'Staff Change' : 'Staff', format: formatStaff },
+  ];
+  el.innerHTML = metricConfigs.map(m => {
+    let items;
+    if (isChange) {
+      items = companies.map(c => {
+        const name = c.fields['Company Name'] || 'Unknown';
+        const latest = c.fields[m.key];
+        const h1 = h1Lookup[name];
+        const prev = h1 ? h1[m.h1Key] : null;
+        const change = (latest != null && prev != null) ? latest - prev : null;
+        return { name, value: change };
+      }).filter(x => x.value != null).sort((a, b) => Math.abs(b.value) - Math.abs(a.value)).slice(0, 10);
+    } else {
+      items = companies.map(c => ({ name: c.fields['Company Name'] || 'Unknown', value: c.fields[m.key] ?? null }))
+        .filter(x => x.value != null).sort((a, b) => b.value - a.value).slice(0, 10);
+    }
+    const rows = items.map((item, i) => {
+      let valStr, cssClass = '';
+      if (isChange) { valStr = formatChange(item.value, m.format); cssClass = item.value > 0 ? 'positive' : item.value < 0 ? 'negative' : ''; }
+      else { valStr = m.format(item.value); }
+      const batch = (batchMap && batchMap[item.name]) || '';
+      const batchHtml = batch ? `<span class="rank-batch">${batch}</span>` : '';
+      return `<div class="ranked-item"><span class="rank-num">${i + 1}</span>${batchHtml}<span class="rank-name" title="${item.name}">${item.name}</span><span class="rank-value ${cssClass}">${valStr}</span></div>`;
+    }).join('');
+    return `<div class="ranked-list"><div class="ranked-list-title">${m.label}</div>${rows || '<div style="color:var(--text-muted);font-size:12px;font-family:DM Mono,monospace">No data</div>'}</div>`;
+  }).join('');
+}
+
+function renderTabPage(tabKey, companies, h1Lookup, batchMap) {
+  renderMetricCards(`cards-${tabKey}`, companies, h1Lookup);
+  renderRankedList(`top10-${tabKey}`, companies, h1Lookup, false, batchMap);
+  renderRankedList(`change-${tabKey}`, companies, h1Lookup, true, batchMap);
+}
+
+function showSkeletonsForTab(tabKey) {
+  renderSkeletonCards(`cards-${tabKey}`);
+  renderSkeletonRanked(`top10-${tabKey}`);
+  renderSkeletonRanked(`change-${tabKey}`);
+}
+
+/* ── Status bar ── */
+
+function setStatus(type, message) {
+  const bar = document.getElementById('statusBar');
+  const text = document.getElementById('statusText');
+  bar.className = 'status-bar ' + type;
+  text.textContent = message;
+}
+
+/* ── Tabs ── */
+
+const TAB_KEYS = ['general', 'ai', 'web3'];
+
+function switchTab(tabKey) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
+  document.querySelectorAll('.tab-page').forEach(p => p.classList.toggle('active', p.id === `page-${tabKey}`));
+}
+
+document.querySelector('.tab-bar').addEventListener('click', e => {
+  const btn = e.target.closest('.tab-btn');
+  if (btn) switchTab(btn.dataset.tab);
+});
+
+/* ── Global state ── */
+
+let gData = { general: [], ai: [], web3: [] };
+let gH1Lookup = {};
+let gBatchMap = {};
+
+/* ── Main loader ── */
+
+async function loadDashboard() {
+  const apiKey = document.getElementById('apiKey').value.trim();
+  if (!apiKey) { setStatus('error', 'Please enter an API key'); return; }
+
+  const btn = document.getElementById('loadBtn');
+  btn.disabled = true;
+  btn.textContent = 'Loading…';
+
+  const dashboard = document.getElementById('dashboard');
+  dashboard.classList.remove('hidden');
+
+  TAB_KEYS.forEach(showSkeletonsForTab);
+  setStatus('loading', 'Fetching Companies…');
+
+  try {
+    const companiesRaw = await fetchAllRecords(apiKey, COMPANIES_TABLE, [
+      'Company Name', 'Latest Raised', 'Latest Valuation', 'Latest Revenue', 'Latest Staff',
+      'AI Label', 'Company Verticals', 'On', 'Batch'
+    ]);
+
+    setStatus('loading', `Fetched ${companiesRaw.length} company records. Filtering…`);
+    const { filtered: companies, debug } = filterCompanies(companiesRaw);
+    setStatus('loading', `${debug.bothPassCount} active companies. Fetching Ecosystem Stats…`);
+
+    const statsRaw = await fetchAllRecords(apiKey, STATS_TABLE, [
+      'Company Name', 'Period', 'Total Raised', 'Valuation', 'Revenue', 'Staff'
+    ]);
+
+    setStatus('loading', `Fetched ${statsRaw.length} stat records. Building dashboard…`);
+    const idToName = buildRecordIdToName(companiesRaw);
+    const h1Lookup = buildH1Lookup(statsRaw, idToName);
+    const batchMap = buildBatchMap(companies);
+
+    const aiCompanies = filterAI(companies);
+    const web3Companies = filterWeb3(companies);
+
+    gData = { general: companies, ai: aiCompanies, web3: web3Companies };
+    gH1Lookup = h1Lookup;
+    gBatchMap = batchMap;
+
+    renderTabPage('general', companies, h1Lookup, batchMap);
+    renderTabPage('ai', aiCompanies, h1Lookup, batchMap);
+    renderTabPage('web3', web3Companies, h1Lookup, batchMap);
+
+    setStatus('success', `Dashboard loaded — ${companies.length} companies, ${aiCompanies.length} AI, ${web3Companies.length} Web3, ${statsRaw.length} stat records`);
+  } catch (err) {
+    setStatus('error', `Error: ${err.message}`);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Load';
+  }
+}
+
+document.getElementById('apiKey').addEventListener('keydown', e => {
+  if (e.key === 'Enter') loadDashboard();
+});
+
+/* ── Company Lookup (per-tab) ── */
+
+function renderLookupResult(container, companyName, companies) {
+  const company = companies.find(c => c.fields['Company Name'] === companyName);
+  if (!company) { container.innerHTML = ''; return; }
+  const f = company.fields;
+  const h1 = gH1Lookup[companyName] || {};
+  const batch = gBatchMap[companyName] || '';
+  const batchHtml = batch ? `<span class="rank-batch" style="font-size:11px;padding:2px 8px">${batch}</span>` : '';
+  const rows = [
+    { label: 'Raised', latest: f['Latest Raised'], prev: h1.raised, fmt: formatCurrency },
+    { label: 'Valuation', latest: f['Latest Valuation'], prev: h1.valuation, fmt: formatCurrency },
+    { label: 'Revenue', latest: f['Latest Revenue'], prev: h1.revenue, fmt: formatCurrency },
+    { label: 'Staff', latest: f['Latest Staff'], prev: h1.staff, fmt: formatStaff },
+  ];
+  const tableRows = rows.map(r => {
+    const latestStr = r.fmt(r.latest);
+    const prevStr = r.fmt(r.prev);
+    let changeStr = '—', changeCls = '';
+    if (r.latest != null && r.prev != null) {
+      const diff = r.latest - r.prev;
+      changeStr = formatChange(diff, r.fmt);
+      changeCls = diff > 0 ? 'lookup-change-pos' : diff < 0 ? 'lookup-change-neg' : '';
+    }
+    return `<tr><td>${r.label}</td><td>${prevStr}</td><td>${latestStr}</td><td class="${changeCls}">${changeStr}</td></tr>`;
+  }).join('');
+  container.innerHTML = `
+    <div class="lookup-result">
+      <div class="lookup-company-header">${batchHtml}<span class="lookup-company-name">${companyName}</span></div>
+      <table class="lookup-table">
+        <thead><tr><th>Metric</th><th>25H1</th><th>26H1 (Latest)</th><th>Change</th></tr></thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+    </div>`;
+}
+
+document.querySelectorAll('.lookup-box').forEach(box => {
+  const input = box.querySelector('.lookup-input');
+  const dropdown = box.querySelector('.lookup-dropdown');
+  const resultContainer = box.closest('.section').querySelector('.lookup-result-container');
+  const scope = box.dataset.tabScope;
+  let activeIdx = -1;
+
+  function getCompanies() { return gData[scope] || []; }
+
+  function updateDropdown() {
+    const q = input.value.trim().toLowerCase();
+    const companies = getCompanies();
+    if (!q || companies.length === 0) { dropdown.classList.add('hidden'); activeIdx = -1; return; }
+    const matches = companies.map(c => c.fields['Company Name']).filter(Boolean)
+      .filter(n => n.toLowerCase().includes(q))
+      .sort((a, b) => {
+        const aS = a.toLowerCase().startsWith(q) ? 0 : 1;
+        const bS = b.toLowerCase().startsWith(q) ? 0 : 1;
+        return aS - bS || a.localeCompare(b);
+      }).slice(0, 12);
+    if (!matches.length) { dropdown.classList.add('hidden'); activeIdx = -1; return; }
+    activeIdx = -1;
+    dropdown.innerHTML = matches.map((name, i) => {
+      const batch = gBatchMap[name] || '';
+      const batchHtml = batch ? `<span class="rank-batch">${batch}</span>` : '';
+      return `<div class="lookup-option" data-idx="${i}" data-name="${name}">${batchHtml}${name}</div>`;
+    }).join('');
+    dropdown.classList.remove('hidden');
+  }
+
+  function selectOption(name) {
+    input.value = name;
+    dropdown.classList.add('hidden');
+    activeIdx = -1;
+    renderLookupResult(resultContainer, name, getCompanies());
+  }
+
+  input.addEventListener('input', updateDropdown);
+
+  input.addEventListener('keydown', e => {
+    const options = dropdown.querySelectorAll('.lookup-option');
+    if (!options.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); activeIdx = Math.min(activeIdx + 1, options.length - 1); options.forEach((o, i) => o.classList.toggle('active', i === activeIdx)); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); activeIdx = Math.max(activeIdx - 1, 0); options.forEach((o, i) => o.classList.toggle('active', i === activeIdx)); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (activeIdx >= 0 && options[activeIdx]) selectOption(options[activeIdx].dataset.name); }
+    else if (e.key === 'Escape') { dropdown.classList.add('hidden'); activeIdx = -1; }
+  });
+
+  dropdown.addEventListener('click', e => { const opt = e.target.closest('.lookup-option'); if (opt) selectOption(opt.dataset.name); });
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.lookup-box')) {
+    document.querySelectorAll('.lookup-dropdown').forEach(d => d.classList.add('hidden'));
+  }
+});
+</script>
+</body>
+</html>
