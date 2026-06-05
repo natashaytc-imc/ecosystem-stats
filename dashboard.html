@@ -1051,9 +1051,13 @@ header h1 span {
     <span class="chat-title">AppWorks Data Assistant</span>
     <button class="chat-close" id="chatClose">&times;</button>
   </div>
+  <div id="chatKeyBar" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg)">
+    <input type="password" id="anthropicKey" placeholder="Paste Anthropic API key" autocomplete="off" style="flex:1;font-family:'DM Mono',monospace;font-size:11px;padding:7px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text);outline:none">
+    <button id="chatKeyBtn" class="btn" style="font-size:11px;padding:6px 14px" onclick="setAnthropicKey()">Set</button>
+  </div>
   <div class="chat-messages" id="chatMessages">
     <div class="chat-msg chat-msg-assistant">
-      <div class="chat-msg-content">Hi! I can answer questions about the AppWorks portfolio data. Try asking things like:<br><br>&bull; What is the total valuation of AI companies?<br>&bull; Which company raised the most?<br>&bull; Compare Taiwan vs Singapore startups</div>
+      <div class="chat-msg-content">Hi! Paste your Anthropic API key above to get started. Then try asking things like:<br><br>&bull; What is the total valuation of AI companies?<br>&bull; Which company raised the most?<br>&bull; Compare Taiwan vs Singapore startups</div>
     </div>
   </div>
   <div class="chat-input-bar">
@@ -1068,7 +1072,7 @@ header h1 span {
 const BASE_ID = 'appKg1PG4KurhvyIK';
 const COMPANIES_TABLE = 'Companies';
 const STATS_TABLE = 'Ecosystem Stats';
-const ANTHROPIC_KEY = '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';
+let ANTHROPIC_KEY = '';
 
 
 function normalizeText(value) {
@@ -1887,7 +1891,25 @@ function appendMessage(role, content) {
 let chatHistory = [];
 let chatStreaming = false;
 
+function setAnthropicKey() {
+  const keyInput = document.getElementById('anthropicKey');
+  const val = keyInput.value.trim();
+  if (!val) return;
+  ANTHROPIC_KEY = val;
+  const bar = document.getElementById('chatKeyBar');
+  bar.innerHTML = '<span style="font-family:DM Mono,monospace;font-size:11px;color:var(--green)">&#10003; API key set</span>';
+  document.getElementById('chatInput').focus();
+}
+
+document.getElementById('anthropicKey').addEventListener('keydown', e => {
+  if (e.key === 'Enter') setAnthropicKey();
+});
+
 async function sendChatMessage() {
+  if (!ANTHROPIC_KEY) {
+    appendMessage('assistant', 'Please set your Anthropic API key first.');
+    return;
+  }
   const apiKey = ANTHROPIC_KEY;
 
   const input = document.getElementById('chatInput');
