@@ -327,6 +327,26 @@ header h1 span {
   white-space: nowrap;
 }
 
+.rank-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  width: 42px;
+  text-align: right;
+}
+
+.ranked-list-footer {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+}
+
 /* Skeleton */
 .skeleton {
   background: var(--skeleton);
@@ -512,6 +532,7 @@ header h1 span {
 .tab-page { display: none; }
 .tab-page.active { display: block; }
 
+/* Market cards */
 /* Responsive */
 @media (max-width: 1024px) {
   .cards-grid, .ranked-grid { grid-template-columns: repeat(2, 1fr); }
@@ -523,6 +544,329 @@ header h1 span {
   .controls { margin-left: 0; width: 100%; }
   .controls input { flex: 1; }
   .tab-btn { padding: 8px 12px; font-size: 11px; }
+}
+
+/* Presentation tab */
+#page-presentation .section { padding: 32px 28px; }
+
+.pres-title-block {
+  margin-bottom: 24px;
+}
+
+.pres-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.pres-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.pres-title {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+.pres-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  padding-left: 38px;
+}
+
+.pres-narrative {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 800px;
+  margin-top: 14px;
+}
+
+.pres-narrative strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.pres-highlight {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.pres-collapse-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.pres-collapse-toggle:hover {
+  background: var(--accent-glow);
+  border-color: var(--accent);
+}
+
+.pres-collapse-toggle .arrow {
+  transition: transform 0.2s;
+  font-size: 10px;
+}
+
+.pres-collapse-toggle.open .arrow { transform: rotate(90deg); }
+
+.pres-collapse-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.pres-collapse-body.open {
+  max-height: 500px;
+}
+
+.pres-collapse-inner {
+  padding: 16px 0 4px 0;
+}
+
+.pres-def-term {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.pres-def-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.pres-def-desc:last-child { margin-bottom: 0; }
+
+.pres-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pres-bullets li {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pres-bullets li:last-child { border-bottom: none; }
+
+.pres-bullets li strong { color: var(--text); font-weight: 600; }
+
+@media (max-width: 600px) {
+  .pres-title { font-size: 20px; }
+}
+
+/* Chat FAB */
+.chat-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 50px;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(238, 122, 47, 0.35);
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.chat-fab:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(238, 122, 47, 0.45); }
+.chat-fab:active { transform: scale(0.96); }
+.chat-fab:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
+.chat-fab svg { flex-shrink: 0; }
+
+/* Chat Panel */
+.chat-panel {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 420px;
+  height: 560px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.chat-title {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.chat-close {
+  border: none;
+  background: none;
+  font-size: 22px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.chat-close:hover { color: var(--text); }
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-msg {
+  max-width: 88%;
+  line-height: 1.55;
+}
+
+.chat-msg-user {
+  align-self: flex-end;
+}
+
+.chat-msg-user .chat-msg-content {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 14px 14px 4px 14px;
+  padding: 10px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+}
+
+.chat-msg-assistant {
+  align-self: flex-start;
+}
+
+.chat-msg-assistant .chat-msg-content {
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: 14px 14px 14px 4px;
+  padding: 10px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+}
+
+.chat-msg-assistant .chat-msg-content p { margin: 0 0 8px 0; }
+.chat-msg-assistant .chat-msg-content p:last-child { margin-bottom: 0; }
+.chat-msg-assistant .chat-msg-content strong { font-weight: 600; }
+.chat-msg-assistant .chat-msg-content ul, .chat-msg-assistant .chat-msg-content ol { margin: 4px 0 8px 18px; }
+.chat-msg-assistant .chat-msg-content li { margin-bottom: 2px; }
+.chat-msg-assistant .chat-msg-content code {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.chat-msg-thinking .chat-msg-content {
+  background: transparent;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+.chat-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.chat-input {
+  flex: 1;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.chat-input:focus { border-color: var(--accent); }
+.chat-input::placeholder { color: var(--text-muted); }
+
+.chat-send {
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+
+.chat-send:hover { opacity: 0.85; }
+.chat-send:disabled { opacity: 0.35; cursor: not-allowed; }
+
+@media (max-width: 600px) {
+  .chat-fab-label { display: none; }
+  .chat-fab { padding: 14px; border-radius: 50%; }
+  .chat-panel { width: calc(100vw - 16px); height: calc(100vh - 100px); right: 8px; bottom: 8px; }
 }
 
 /* Hidden */
@@ -549,6 +893,7 @@ header h1 span {
       <button class="tab-btn active" data-tab="general">General</button>
       <button class="tab-btn" data-tab="ai">AI Companies</button>
       <button class="tab-btn" data-tab="web3">Web3</button>
+      <button class="tab-btn" data-tab="presentation">Presentation</button>
     </div>
 
     <!-- Tab: General -->
@@ -622,6 +967,100 @@ header h1 span {
         <div class="lookup-result-container"></div>
       </div>
     </div>
+
+    <!-- Tab: Presentation -->
+    <div class="tab-page" id="page-presentation">
+      <div class="section" id="pres-1">
+        <div class="pres-title-block">
+          <div class="pres-title-row"><span class="pres-num">01</span><span class="pres-title">Data Collection Methodology</span></div>
+        </div>
+        <div class="pres-narrative" id="pres-narrative-method"></div>
+      </div>
+      <div class="section" id="pres-2">
+        <div class="pres-title-block">
+          <div class="pres-title-row"><span class="pres-num">02</span><span class="pres-title">Ecosystem at a Glance: Positive Growth Across the Board</span></div>
+        </div>
+        <div class="cards-grid" id="cards-pres-general"></div>
+        <div class="pres-narrative" id="pres-narrative-2"></div>
+      </div>
+      <div class="section" id="pres-3">
+        <div class="pres-title-block">
+          <div class="pres-title-row"><span class="pres-num">03</span><span class="pres-title">Kraken Driving Headline Numbers</span></div>
+        </div>
+        <div class="pres-narrative" id="pres-narrative-3"></div>
+        <div class="ranked-grid" id="change-pres-general"></div>
+      </div>
+      <div class="section" id="pres-4">
+        <div class="pres-title-block">
+          <div class="pres-title-row"><span class="pres-num">04</span><span class="pres-title">The Rest of the Ecosystem: Steady Growth</span></div>
+        </div>
+        <div class="cards-grid" id="cards-pres-exkraken"></div>
+        <div class="pres-narrative" id="pres-narrative-4"></div>
+      </div>
+      <div class="section" id="pres-5">
+        <div class="pres-title-block">
+          <div class="pres-title-row"><span class="pres-num">05</span><span class="pres-title" id="pres-title-5">60% of Ecosystem Are Now AI</span></div>
+          <div class="pres-subtitle">Includes AI-native + AI-enabled companies</div>
+        </div>
+        <div class="pres-narrative" id="pres-ai-method"></div>
+        <div class="cards-grid" id="cards-pres-ai"></div>
+        <div class="pres-narrative" id="pres-narrative-5"></div>
+        <button class="pres-collapse-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+          <span class="arrow">&#9654;</span> AI Classification Definitions
+        </button>
+        <div class="pres-collapse-body">
+          <div class="pres-collapse-inner">
+            <div class="pres-def-term">AI-Native</div>
+            <div class="pres-def-desc">AI is the core product; the startup could not exist without AI.<br>e.g. trains its own models, product IS the model (LLM, CV, agent), moat depends on proprietary data or pipelines.</div>
+            <div class="pres-def-term">AI-Enabled</div>
+            <div class="pres-def-desc">AI is used in the product, but is not the core value proposition.<br>e.g. uses AI to automate certain workflows, product could still function without AI, integrates off-the-shelf APIs like GPT or Claude.</div>
+            <div class="pres-def-term">Not Yet AI</div>
+            <div class="pres-def-desc">No meaningful AI/ML used in the product.</div>
+            <div style="margin-top:10px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">Data source: Airtable AI agent scanning company URL + web search</div>
+          </div>
+        </div>
+      </div>
+      <div class="section" id="pres-6">
+        <div class="pres-title-block">
+          <div class="pres-title-row"><span class="pres-num">06</span><span class="pres-title">Web3: Kraken's Breakout Masks a Quieter Ecosystem</span></div>
+        </div>
+        <div class="cards-grid" id="cards-pres-web3"></div>
+        <div class="pres-narrative" id="pres-narrative-6"></div>
+        <div style="margin-top:20px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:12px">Web3 excl. Kraken</div>
+        <div class="cards-grid" id="cards-pres-web3-exkraken"></div>
+      </div>
+      <div class="section" id="pres-7">
+        <div class="pres-title-block">
+          <div class="pres-title-row"><span class="pres-num">07</span><span class="pres-title">Looking Ahead to 26H2</span></div>
+        </div>
+        <ul class="pres-bullets" id="pres-bullets-7"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chat FAB -->
+<button class="chat-fab" id="chatFab" disabled title="Load data first">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <span class="chat-fab-label">Ask Database Assistant</span>
+</button>
+
+<!-- Chat Panel -->
+<div class="chat-panel hidden" id="chatPanel">
+  <div class="chat-header">
+    <span class="chat-title">AppWorks Data Assistant</span>
+    <button class="chat-close" id="chatClose">&times;</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg chat-msg-assistant">
+      <div class="chat-msg-content">Hi! I can answer questions about the AppWorks portfolio data. Try asking things like:<br><br>&bull; What is the total valuation of AI companies?<br>&bull; Which company raised the most?<br>&bull; Compare Taiwan vs Singapore startups</div>
+    </div>
+  </div>
+  <div class="chat-input-bar">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about the data…" autocomplete="off">
+    <button class="chat-send" id="chatSend">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
   </div>
 </div>
 
@@ -629,21 +1068,21 @@ header h1 span {
 const BASE_ID = 'appKg1PG4KurhvyIK';
 const COMPANIES_TABLE = 'Companies';
 const STATS_TABLE = 'Ecosystem Stats';
+const ANTHROPIC_KEY = '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';
+
 
 function normalizeText(value) {
   return String(value ?? '').trim();
 }
 
-const VALID_BATCHES = new Set([
-  'PORTFOLIO',
-  ...Array.from({ length: 9 }, (_, i) => `AW#0${i + 1}`),
-  ...Array.from({ length: 23 }, (_, i) => `AW#${i + 10}`)
-]);
-
 function isValidBatchName(batchName) {
   const normalized = normalizeText(batchName).toUpperCase();
   if (!normalized) return false;
-  return VALID_BATCHES.has(normalized);
+  if (normalized === 'PORTFOLIO') return true;
+  const match = /^AW#0*(\d+)$/.exec(normalized);
+  if (!match) return false;
+  const num = parseInt(match[1], 10);
+  return num >= 1 && num <= 32;
 }
 
 const METRICS = [
@@ -726,15 +1165,17 @@ async function fetchAllRecords(apiKey, tableName, fields) {
 
 /* ── Filtering ── */
 
-function filterCompanies(records) {
+function filterCompanies(records, { skipOnFilter = false } = {}) {
   let onPassCount = 0, batchPassCount = 0;
   const unmatchedBatchNames = new Set();
   const filtered = records.filter(r => {
     const f = r.fields;
-    const onField = f['On'];
-    if (!onField) return false;
-    const onName = normalizeText(typeof onField === 'object' && onField.name ? onField.name : onField);
-    if (onName !== '1') return false;
+    if (!skipOnFilter) {
+      const onField = f['On'];
+      if (!onField) return false;
+      const onName = normalizeText(typeof onField === 'object' && onField.name ? onField.name : onField);
+      if (onName !== '1') return false;
+    }
     onPassCount++;
     const batchField = f['Batch'];
     if (!batchField || !Array.isArray(batchField)) return false;
@@ -748,20 +1189,22 @@ function filterCompanies(records) {
 
 function filterAI(companies) {
   return companies.filter(c => {
-    const label = c.fields['AI Label'];
+    let label = c.fields['AI Label'];
     if (!label) return false;
-    const name = typeof label === 'object' && label.name ? label.name : String(label);
-    return name === 'AI-native' || name === 'AI-enabled';
+    if (Array.isArray(label)) label = label[0];
+    const name = normalizeText(typeof label === 'object' && label.name ? label.name : label).toLowerCase();
+    return name === 'ai-native' || name === 'ai-enabled';
   });
 }
 
 function filterWeb3(companies) {
   return companies.filter(c => {
-    const verticals = c.fields['Company Verticals'];
-    if (!verticals || !Array.isArray(verticals)) return false;
-    return verticals.some(v => {
-      const name = typeof v === 'object' && v.name ? v.name : String(v);
-      return name === 'Web3';
+    let verticals = c.fields['Company Verticals'];
+    if (!verticals) return false;
+    if (!Array.isArray(verticals)) verticals = [verticals];
+    return verticals.flat().some(v => {
+      const name = normalizeText(typeof v === 'object' && v.name ? v.name : v).toLowerCase();
+      return name === 'web3';
     });
   });
 }
@@ -774,28 +1217,84 @@ function buildRecordIdToName(companyRecords) {
   return map;
 }
 
-function buildH1Lookup(statsRecords, idToName) {
+function buildHqMap(companyRecords) {
+  const map = {};
+  for (const r of companyRecords) {
+    const name = r.fields['Company Name'];
+    const hq = r.fields['HQ'];
+    if (name && hq) {
+      map[name] = typeof hq === 'object' && hq.name ? hq.name : String(hq);
+    }
+  }
+  return map;
+}
+
+function resolveLinkedName(f, idToName) {
+  const linked = f['Company Name'];
+  if (!linked || !Array.isArray(linked) || linked.length === 0) return null;
+  const rawId = typeof linked[0] === 'object' ? (linked[0].id || linked[0].name || String(linked[0])) : String(linked[0]);
+  return (idToName && idToName[rawId]) || rawId;
+}
+
+function buildPeriodLookup(statsRecords, idToName, period) {
   const map = {};
   for (const r of statsRecords) {
     const f = r.fields;
-    if (f['Period'] !== '25H1') continue;
-    const linked = f['Company Name'];
-    if (!linked || !Array.isArray(linked) || linked.length === 0) continue;
-    const rawId = typeof linked[0] === 'object' ? (linked[0].id || linked[0].name || String(linked[0])) : String(linked[0]);
-    const name = (idToName && idToName[rawId]) || rawId;
-    map[name] = { raised: f['Total Raised'] ?? null, valuation: f['Valuation'] ?? null, revenue: f['Revenue'] ?? null, staff: f['Staff'] ?? null };
+    if (f['Period'] !== period) continue;
+    const name = resolveLinkedName(f, idToName);
+    if (!name) continue;
+    map[name] = { raised: f['Total Raised'] ?? null, valuation: f['Valuation'] ?? null, revenue: f['Revenue'] ?? null, staff: f['Staff'] ?? null, hasUpdate: !!f['Has Update'], aiReasoning: f['AI Label Reasoning'] || '' };
   }
   return map;
+}
+
+function buildCompaniesFromStats(statsRecords, idToName, hqMap, period) {
+  const companies = [];
+  for (const r of statsRecords) {
+    const f = r.fields;
+    if (f['Period'] !== period) continue;
+    const name = resolveLinkedName(f, idToName);
+    if (!name) continue;
+
+    const onRaw = f['On (from Company Name)'];
+    const onVal = Array.isArray(onRaw) && onRaw.length > 0 ? onRaw[0] : (onRaw || '');
+
+    const batchRaw = f['Batch (from Company Name)'];
+    const batchArr = Array.isArray(batchRaw) ? batchRaw.flat() : [];
+
+    const vertRaw = f['Company Verticals (from Company Name)'];
+    const vertArr = Array.isArray(vertRaw) ? vertRaw.flat() : [];
+
+    companies.push({
+      id: r.id,
+      fields: {
+        'Company Name': name,
+        'On': onVal,
+        'Batch': batchArr,
+        'AI Label': (period === '26H1' ? f['AI Label'] : f['AI-Label (from 26H1)']) || '',
+        'Company Verticals': vertArr,
+        'HQ': hqMap[name] || '',
+        'Latest Raised': f['Total Raised'] ?? null,
+        'Latest Valuation': f['Valuation'] ?? null,
+        'Latest Revenue': f['Revenue'] ?? null,
+        'Latest Staff': f['Staff'] ?? null,
+      }
+    });
+  }
+  return companies;
 }
 
 function getBatchLabel(company) {
   const batchField = company.fields['Batch'];
   if (!batchField || !Array.isArray(batchField)) return '';
-  const names = batchField.map(v => normalizeText(typeof v === 'object' && v.name ? v.name : v));
+  const names = batchField.map(v => normalizeText(typeof v === 'object' && v.name ? v.name : v)).filter(Boolean);
   const aw = names.find(n => /^AW#/i.test(n));
-  if (aw) return aw;
-  if (names.some(n => n.toUpperCase() === 'PORTFOLIO')) return 'Portfolio';
-  return names[0] || '';
+  const hasPortfolio = names.some(n => n.toUpperCase() === 'PORTFOLIO');
+  const parts = [];
+  if (aw) parts.push(aw);
+  if (hasPortfolio) parts.push('Portfolio');
+  if (!parts.length) return names[0] || '';
+  return parts.join(' · ');
 }
 
 function buildBatchMap(companies) {
@@ -839,15 +1338,12 @@ function buildYoyHtml(latest, prev, formatter) {
   return `<div class="card-yoy"><span class="yoy-badge ${cls}">${pctStr}</span><span class="yoy-abs">${absStr} vs 25H1</span></div>`;
 }
 
-function renderMetricCards(containerId, companies, h1Lookup) {
+function renderMetricCards(containerId, companies, h1Lookup, prevActiveCount = null) {
   const el = document.getElementById(containerId);
   if (!el) return;
   const count = companies.length;
-  let prevCount = null;
-  if (h1Lookup) {
-    prevCount = companies.filter(c => h1Lookup[c.fields['Company Name']]).length;
-  }
-  const startupYoy = h1Lookup ? buildYoyHtml(count, prevCount, v => Math.abs(v).toLocaleString()) : '';
+  const prevCount = prevActiveCount;
+  const startupYoy = prevCount != null ? buildYoyHtml(count, prevCount, v => Math.abs(v).toLocaleString()) : '';
   const startupDetail = prevCount != null
     ? `<div class="card-subtitle">26H1: ${count} / 25H1: ${prevCount}</div>`
     : '';
@@ -876,34 +1372,58 @@ function renderRankedList(containerId, companies, h1Lookup, isChange, batchMap) 
     { key: 'Latest Staff', h1Key: 'staff', label: isChange ? 'Staff Change' : 'Staff', format: formatStaff },
   ];
   el.innerHTML = metricConfigs.map(m => {
-    let items;
+    let allValues, items;
     if (isChange) {
-      items = companies.map(c => {
+      allValues = companies.map(c => {
         const name = c.fields['Company Name'] || 'Unknown';
         const latest = c.fields[m.key];
         const h1 = h1Lookup[name];
         const prev = h1 ? h1[m.h1Key] : null;
         const change = (latest != null && prev != null) ? latest - prev : null;
         return { name, value: change };
-      }).filter(x => x.value != null).sort((a, b) => Math.abs(b.value) - Math.abs(a.value)).slice(0, 10);
+      }).filter(x => x.value != null);
+      items = [...allValues].sort((a, b) => Math.abs(b.value) - Math.abs(a.value)).slice(0, 10);
     } else {
-      items = companies.map(c => ({ name: c.fields['Company Name'] || 'Unknown', value: c.fields[m.key] ?? null }))
-        .filter(x => x.value != null).sort((a, b) => b.value - a.value).slice(0, 10);
+      allValues = companies.map(c => ({ name: c.fields['Company Name'] || 'Unknown', value: c.fields[m.key] ?? null }))
+        .filter(x => x.value != null);
+      items = [...allValues].sort((a, b) => b.value - a.value).slice(0, 10);
     }
+    let totalDenom;
+    if (isChange) {
+      const latestSum = companies.reduce((s, c) => s + (c.fields[m.key] || 0), 0);
+      let prevSum = 0;
+      companies.forEach(c => { const h = h1Lookup[c.fields['Company Name']]; if (h && h[m.h1Key] != null) prevSum += h[m.h1Key]; });
+      totalDenom = latestSum - prevSum;
+    } else {
+      totalDenom = allValues.reduce((s, x) => s + Math.abs(x.value), 0);
+    }
+    const totalAbs = Math.abs(totalDenom);
+    const top10Sum = items.reduce((s, x) => s + (isChange ? x.value : Math.abs(x.value)), 0);
+    const top10Pct = totalAbs > 0 ? ((isChange ? Math.abs(top10Sum) : top10Sum) / totalAbs * 100) : 0;
     const rows = items.map((item, i) => {
       let valStr, cssClass = '';
       if (isChange) { valStr = formatChange(item.value, m.format); cssClass = item.value > 0 ? 'positive' : item.value < 0 ? 'negative' : ''; }
       else { valStr = m.format(item.value); }
+      const pct = totalAbs > 0 ? (isChange
+        ? (item.value / totalDenom * 100).toFixed(1) + '%'
+        : (Math.abs(item.value) / totalAbs * 100).toFixed(1) + '%') : '';
       const batch = (batchMap && batchMap[item.name]) || '';
       const batchHtml = batch ? `<span class="rank-batch">${batch}</span>` : '';
-      return `<div class="ranked-item"><span class="rank-num">${i + 1}</span>${batchHtml}<span class="rank-name" title="${item.name}">${item.name}</span><span class="rank-value ${cssClass}">${valStr}</span></div>`;
+      return `<div class="ranked-item"><span class="rank-num">${i + 1}</span>${batchHtml}<span class="rank-name" title="${item.name}">${item.name}</span><span class="rank-pct">${pct}</span><span class="rank-value ${cssClass}">${valStr}</span></div>`;
     }).join('');
-    return `<div class="ranked-list"><div class="ranked-list-title">${m.label}</div>${rows || '<div style="color:var(--text-muted);font-size:12px;font-family:DM Mono,monospace">No data</div>'}</div>`;
+    const footer = items.length ? `<div class="ranked-list-footer"><span>Top 10 / Total</span><span>${top10Pct.toFixed(1)}%</span></div>` : '';
+    return `<div class="ranked-list"><div class="ranked-list-title">${m.label}</div>${rows || '<div style="color:var(--text-muted);font-size:12px;font-family:DM Mono,monospace">No data</div>'}${footer}</div>`;
   }).join('');
 }
 
-function renderTabPage(tabKey, companies, h1Lookup, batchMap) {
-  renderMetricCards(`cards-${tabKey}`, companies, h1Lookup);
+function getHQ(company) {
+  const hq = company.fields['HQ'];
+  if (!hq) return 'Unknown';
+  return normalizeText(typeof hq === 'object' && hq.name ? hq.name : hq);
+}
+
+function renderTabPage(tabKey, companies, h1Lookup, batchMap, prevActiveCount) {
+  renderMetricCards(`cards-${tabKey}`, companies, h1Lookup, prevActiveCount ?? null);
   renderRankedList(`top10-${tabKey}`, companies, h1Lookup, false, batchMap);
   renderRankedList(`change-${tabKey}`, companies, h1Lookup, true, batchMap);
 }
@@ -912,6 +1432,98 @@ function showSkeletonsForTab(tabKey) {
   renderSkeletonCards(`cards-${tabKey}`);
   renderSkeletonRanked(`top10-${tabKey}`);
   renderSkeletonRanked(`change-${tabKey}`);
+}
+
+/* ── Presentation ── */
+
+function sumMetrics(companies, h1Lookup, excludeNames) {
+  const ex = new Set(excludeNames || []);
+  let r26 = 0, v26 = 0, rev26 = 0, s26 = 0;
+  let r25 = 0, v25 = 0, rev25 = 0, s25 = 0;
+  let count26 = 0, count25 = 0;
+  companies.forEach(c => {
+    const name = c.fields['Company Name'];
+    if (ex.has(name)) return;
+    r26 += c.fields['Latest Raised'] || 0;
+    v26 += c.fields['Latest Valuation'] || 0;
+    rev26 += c.fields['Latest Revenue'] || 0;
+    s26 += c.fields['Latest Staff'] || 0;
+    count26++;
+    const h = h1Lookup[name];
+    if (h) {
+      r25 += h.raised || 0;
+      v25 += h.valuation || 0;
+      rev25 += h.revenue || 0;
+      s25 += h.staff || 0;
+      count25++;
+    }
+  });
+  return { r26, v26, rev26, s26, r25, v25, rev25, s25, count26, count25 };
+}
+
+function pctChange(cur, prev) {
+  if (!prev || prev === 0) return null;
+  return ((cur - prev) / Math.abs(prev)) * 100;
+}
+
+function fmtPct(v) {
+  if (v == null) return '—';
+  return `${v > 0 ? '+' : ''}${v.toFixed(1)}%`;
+}
+
+function renderPresentation() {
+  const p = gPresData;
+  const companies = gData.general || [];
+  const companies25 = gData25.general || [];
+  const aiC = gData.ai || [];
+  const w3C = gData.web3 || [];
+  const carriedCount = p.totalCount - p.updatedCount;
+  const coveragePct = (p.updatedCount / p.totalCount * 100).toFixed(0);
+
+  // ─── Slide 1: Data Collection Methodology ───
+  document.getElementById('pres-narrative-method').innerHTML = `
+    <p><strong>Data sources:</strong> Portfolios updated by Ju, AW#32 updated by Accelerator team, the rest are inputted by founders.</p>
+    <p>Total <strong>${p.updatedCount}</strong> companies updated. Coverage rate <strong>${coveragePct}%</strong>. The remaining <strong>${carriedCount}</strong> companies are carried over from the previous period.</p>
+    <p>This cycle, we used <strong>Airtable AI</strong> to cross-check company status and discovered that several companies are now non-functional.</p>
+    <p style="margin-top:12px;padding:10px 14px;background:var(--surface-2);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;font-size:13px"><strong>Disclaimer:</strong> Some figures represent the most recently collected data and may not reflect events that occurred after the collection date. All monetary values are converted to USD.</p>`;
+
+  // ─── Slide 2: Portfolio at a Glance ───
+  document.getElementById('cards-pres-general').innerHTML = document.getElementById('cards-general').innerHTML;
+  document.getElementById('pres-narrative-2').innerHTML =
+    `<strong>${companies.length}</strong> active startups across the AppWorks ecosystem as of 26H1 (vs ${companies25.length} in 25H1).`;
+
+  // ─── Slide 3: Kraken Driving Headline Numbers ───
+  document.getElementById('pres-narrative-3').innerHTML =
+    `<span class="pres-highlight">Kraken</span> is highlighted below — it contributes <strong>${p.krGrowthShare.toFixed(1)}%</strong> of total Raised growth alone.`;
+  document.getElementById('change-pres-general').innerHTML = document.getElementById('change-general').innerHTML;
+
+  // ─── Slide 4: Rest of Ecosystem excl. Kraken ───
+  const exKrakenH1 = { ...gH1Lookup };
+  delete exKrakenH1['Kraken'];
+  renderMetricCards('cards-pres-exkraken', p.exKrakenCompanies, exKrakenH1, null);
+  document.getElementById('pres-narrative-4').innerHTML =
+    `Removing Kraken's outsized fundraise: Revenue <strong>${fmtPct(p.exKrRevYoy)}</strong> and Staff <strong>${fmtPct(p.exKrStaffYoy)}</strong> best reflect the broader portfolio's health.`;
+
+  // ─── Slide 5: AI Companies ───
+  document.getElementById('pres-title-5').textContent = `${p.aiPct.toFixed(0)}% of Ecosystem Are Now AI`;
+  document.getElementById('pres-ai-method').innerHTML =
+    `<p style="padding:10px 14px;background:var(--surface-2);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;font-size:13px;margin-bottom:16px"><strong>Methodology note:</strong> This is the first time we used an <strong>Airtable AI agent</strong> to scan company URLs and web search results to classify AI labels. Previous periods were classified manually, so the two are not directly comparable. The 25H1 figures shown here are <strong>retroactively labeled using the 26H1 classification standard</strong>.</p>`;
+  document.getElementById('cards-pres-ai').innerHTML = document.getElementById('cards-ai').innerHTML;
+  document.getElementById('pres-narrative-5').innerHTML =
+    `<strong>${aiC.length}</strong> AI companies (${p.aiPct.toFixed(0)}% of portfolio), up <strong>${p.aiDiff >= 0 ? '+' : ''}${p.aiDiff}</strong> from 25H1. Breakdown: <strong>${p.aiNativeCount}</strong> AI-native, <strong>${p.aiEnabledCount}</strong> AI-enabled. AI accounts for <strong>${p.aiRaisedShare.toFixed(1)}%</strong> of total Raised and <strong>${p.aiValShare.toFixed(1)}%</strong> of total Valuation.`;
+
+  // ─── Slide 6: Web3 Companies ───
+  document.getElementById('cards-pres-web3').innerHTML = document.getElementById('cards-web3').innerHTML;
+  document.getElementById('pres-narrative-6').innerHTML =
+    `<strong>${w3C.length}</strong> Web3 companies (<strong>${p.w3Diff >= 0 ? '+' : ''}${p.w3Diff}</strong> vs 25H1). Raised YoY of <strong>${fmtPct(p.w3RaisedYoy)}</strong> is largely driven by Kraken; excluding it, Web3 Raised is <strong>${fmtPct(p.w3ExKrRaisedYoy)}</strong>.
+    <br><br>Despite challenging market conditions, several Web3 portfolio companies continue to perform well — notably <strong>SignalPlus</strong>, which has maintained strong growth.`;
+  renderMetricCards('cards-pres-web3-exkraken', p.w3ExKrakenCompanies, exKrakenH1, null);
+
+  // ─── Slide 7: Looking Ahead ───
+  document.getElementById('pres-bullets-7').innerHTML = `
+    <li><strong>AI companies approaching ${Math.ceil(aiC.length / 10) * 10}:</strong> Currently at ${aiC.length} (${p.aiPct.toFixed(0)}% of portfolio). Can we break ${Math.ceil(aiC.length / 100) * 100} by 26H2?</li>
+    <li><strong>Web3 — next breakout beyond Kraken:</strong> ${w3C.length} companies with ${formatCurrency(p.w3Rev)} revenue. Ecosystem needs its next growth driver.</li>
+    <li><strong>Revenue growth sustainability:</strong> Portfolio revenue (excl. Kraken) grew <strong>${fmtPct(p.exKrRevYoy)}</strong>. Can the ecosystem accelerate into 26H2?</li>`;
 }
 
 /* ── Status bar ── */
@@ -925,7 +1537,7 @@ function setStatus(type, message) {
 
 /* ── Tabs ── */
 
-const TAB_KEYS = ['general', 'ai', 'web3'];
+const TAB_KEYS = ['general', 'ai', 'web3', 'presentation'];
 
 function switchTab(tabKey) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabKey));
@@ -940,8 +1552,11 @@ document.querySelector('.tab-bar').addEventListener('click', e => {
 /* ── Global state ── */
 
 let gData = { general: [], ai: [], web3: [] };
+let gData25 = { general: [], ai: [], web3: [] };
 let gH1Lookup = {};
+let gLatestLookup = {};
 let gBatchMap = {};
+let gPresData = {};
 
 /* ── Main loader ── */
 
@@ -961,35 +1576,94 @@ async function loadDashboard() {
 
   try {
     const companiesRaw = await fetchAllRecords(apiKey, COMPANIES_TABLE, [
-      'Company Name', 'Latest Raised', 'Latest Valuation', 'Latest Revenue', 'Latest Staff',
-      'AI Label', 'Company Verticals', 'On', 'Batch'
+      'Company Name', 'HQ'
     ]);
 
-    setStatus('loading', `Fetched ${companiesRaw.length} company records. Filtering…`);
-    const { filtered: companies, debug } = filterCompanies(companiesRaw);
-    setStatus('loading', `${debug.bothPassCount} active companies. Fetching Ecosystem Stats…`);
+    setStatus('loading', `Fetched ${companiesRaw.length} company records. Fetching Ecosystem Stats…`);
 
     const statsRaw = await fetchAllRecords(apiKey, STATS_TABLE, [
-      'Company Name', 'Period', 'Total Raised', 'Valuation', 'Revenue', 'Staff'
+      'Company Name', 'Period', 'Total Raised', 'Valuation', 'Revenue', 'Staff',
+      'Has Update', 'AI Label Reasoning', 'AI Label', 'AI-Label (from 26H1)',
+      'On (from Company Name)', 'Batch (from Company Name)', 'Company Verticals (from Company Name)'
     ]);
 
     setStatus('loading', `Fetched ${statsRaw.length} stat records. Building dashboard…`);
     const idToName = buildRecordIdToName(companiesRaw);
-    const h1Lookup = buildH1Lookup(statsRaw, idToName);
+    const hqMap = buildHqMap(companiesRaw);
+
+    const allCompanies26 = buildCompaniesFromStats(statsRaw, idToName, hqMap, '26H1');
+    const { filtered: companies, debug } = filterCompanies(allCompanies26);
+
+    const allCompanies25 = buildCompaniesFromStats(statsRaw, idToName, hqMap, '25H1');
+    const { filtered: companies25 } = filterCompanies(allCompanies25, { skipOnFilter: true });
+
+    const h1Lookup = buildPeriodLookup(statsRaw, idToName, '25H1');
+    const latestLookup = buildPeriodLookup(statsRaw, idToName, '26H1');
     const batchMap = buildBatchMap(companies);
 
     const aiCompanies = filterAI(companies);
     const web3Companies = filterWeb3(companies);
+    const ai25 = filterAI(companies25);
+    const web325 = filterWeb3(companies25);
+
+    const prevCounts = {
+      general: companies25.length,
+      ai: ai25.length,
+      web3: web325.length,
+    };
 
     gData = { general: companies, ai: aiCompanies, web3: web3Companies };
+    gData25 = { general: companies25, ai: ai25, web3: web325 };
     gH1Lookup = h1Lookup;
+    gLatestLookup = latestLookup;
     gBatchMap = batchMap;
 
-    renderTabPage('general', companies, h1Lookup, batchMap);
-    renderTabPage('ai', aiCompanies, h1Lookup, batchMap);
-    renderTabPage('web3', web3Companies, h1Lookup, batchMap);
+    renderTabPage('general', companies, h1Lookup, batchMap, prevCounts.general);
+    renderTabPage('ai', aiCompanies, h1Lookup, batchMap, prevCounts.ai);
+    renderTabPage('web3', web3Companies, h1Lookup, batchMap, prevCounts.web3);
+
+    const exKr = sumMetrics(companies, h1Lookup, ['Kraken']);
+    const w3Tot = sumMetrics(web3Companies, h1Lookup);
+    const w3ExKr = sumMetrics(web3Companies, h1Lookup, ['Kraken']);
+    const krakenH = h1Lookup['Kraken'] || {};
+    const krakenC = companies.find(c => c.fields['Company Name'] === 'Kraken');
+    const kr26r = krakenC?.fields['Latest Raised'] || 0;
+    const krRaisedGrowth = kr26r - (krakenH.raised || 0);
+    const totalLatest = companies.reduce((s, c) => s + (c.fields['Latest Raised'] || 0), 0);
+    let totalPrev = 0;
+    companies.forEach(c => { const hh = h1Lookup[c.fields['Company Name']]; if (hh && hh.raised != null) totalPrev += hh.raised; });
+    const totalGrowth = totalLatest - totalPrev;
+    const aiTot = sumMetrics(aiCompanies, h1Lookup);
+
+    const aiNativeCount = aiCompanies.filter(c => {
+      let l = c.fields['AI Label']; if (Array.isArray(l)) l = l[0];
+      return normalizeText(typeof l === 'object' && l.name ? l.name : l).toLowerCase() === 'ai-native';
+    }).length;
+
+    gPresData = {
+      krGrowthShare: totalGrowth > 0 ? (krRaisedGrowth / totalGrowth * 100) : 0,
+      exKrRevYoy: pctChange(exKr.rev26, exKr.rev25),
+      exKrStaffYoy: pctChange(exKr.s26, exKr.s25),
+      aiPct: companies.length > 0 ? (aiCompanies.length / companies.length * 100) : 0,
+      aiDiff: aiCompanies.length - ai25.length,
+      aiRaisedShare: totalLatest > 0 ? (aiTot.r26 / totalLatest * 100) : 0,
+      aiValShare: aiTot.v26 > 0 && companies.length > 0 ? (aiTot.v26 / companies.reduce((s, c) => s + (c.fields['Latest Valuation'] || 0), 0) * 100) : 0,
+      aiNativeCount,
+      aiEnabledCount: aiCompanies.length - aiNativeCount,
+      w3Diff: web3Companies.length - web325.length,
+      w3RaisedYoy: pctChange(w3Tot.r26, w3Tot.r25),
+      w3ExKrRaisedYoy: pctChange(w3ExKr.r26, w3ExKr.r25),
+      w3Rev: w3Tot.rev26,
+      updatedCount: Object.values(latestLookup).filter(v => v.hasUpdate).length,
+      totalCount: companies.length,
+      exKrakenCompanies: companies.filter(c => c.fields['Company Name'] !== 'Kraken'),
+      w3ExKrakenCompanies: web3Companies.filter(c => c.fields['Company Name'] !== 'Kraken'),
+    };
+
+    renderPresentation();
 
     setStatus('success', `Dashboard loaded — ${companies.length} companies, ${aiCompanies.length} AI, ${web3Companies.length} Web3, ${statsRaw.length} stat records`);
+    enableChat();
   } catch (err) {
     setStatus('error', `Error: ${err.message}`);
   } finally {
@@ -1092,6 +1766,269 @@ document.querySelectorAll('.lookup-box').forEach(box => {
 document.addEventListener('click', e => {
   if (!e.target.closest('.lookup-box')) {
     document.querySelectorAll('.lookup-dropdown').forEach(d => d.classList.add('hidden'));
+  }
+});
+
+/* ── Chatbot ── */
+
+let chatDataLoaded = false;
+
+function buildChatContext() {
+  const sections = [];
+
+  sections.push('You are the AppWorks Ecosystem Stats data assistant. Answer questions using the data below. All monetary values are in USD. "26H1" means first half of 2026 (latest period). "25H1" means first half of 2025 (previous period for YoY comparison). Format currency as $X.XB / $X.XM / $X.XK and staff as X.XK when appropriate.\n\nRESPONSE STYLE:\n1. LISTING REQUESTS: If the user simply asks to list or enumerate items (e.g. "列出 AI 公司", "list Web3 companies", "哪些公司是 AI-native", "show me companies in Taiwan"), just provide the list with relevant data (names, batch tags, key metrics) WITHOUT extra analysis, commentary, or trends. End your response with: "需要更深入的分析嗎？" to offer follow-up.\n2. ANALYTICAL QUESTIONS: If the user asks "why", "how", "compare", or requests analysis/insights, then provide data-driven analysis. When answering about changes (e.g. "why did Web3 count decrease?"), FIRST list the specific companies that were added or removed between periods, with concrete names and numbers, then provide your analysis.\n3. Keep initial answers concise and data-driven; only elaborate when asked.\n\nWhen mentioning any company by name, ALWAYS include its batch tag in parentheses, e.g. "Appier (AW#09)" or "XREX (Portfolio)". Never list a company name without its batch.\n\nIf the user doesn\'t specify a time period, default to 26H1 (latest).');
+
+  for (const [tabKey, label] of [['general', 'All Portfolio'], ['ai', 'AI Companies (AI-native + AI-enabled)'], ['web3', 'Web3 Companies']]) {
+    const companies = gData[tabKey] || [];
+    if (!companies.length) continue;
+    const sums = { raised: 0, valuation: 0, revenue: 0, staff: 0 };
+    const prev = { raised: 0, valuation: 0, revenue: 0, staff: 0 };
+    let prevCount = 0, updatedCount = 0;
+    companies.forEach(c => {
+      const f = c.fields;
+      const name = f['Company Name'];
+      sums.raised += f['Latest Raised'] || 0;
+      sums.valuation += f['Latest Valuation'] || 0;
+      sums.revenue += f['Latest Revenue'] || 0;
+      sums.staff += f['Latest Staff'] || 0;
+      const latest = gLatestLookup[name];
+      if (latest && latest.hasUpdate) updatedCount++;
+      const h = gH1Lookup[name];
+      if (h) {
+        prev.raised += h.raised || 0;
+        prev.valuation += h.valuation || 0;
+        prev.revenue += h.revenue || 0;
+        prev.staff += h.staff || 0;
+        prevCount++;
+      }
+    });
+    sections.push(`\n## ${label} — Aggregates (${companies.length} companies, 26H1)\n26H1 confirmed updated: ${updatedCount}/${companies.length} companies (${(updatedCount/companies.length*100).toFixed(0)}%). The rest may have stale data.\nTotal Raised: $${(sums.raised/1e6).toFixed(1)}M | Valuation: $${(sums.valuation/1e6).toFixed(1)}M | Revenue: $${(sums.revenue/1e6).toFixed(1)}M | Staff: ${sums.staff}\n25H1 comparison (${prevCount} companies had data): Raised: $${(prev.raised/1e6).toFixed(1)}M | Valuation: $${(prev.valuation/1e6).toFixed(1)}M | Revenue: $${(prev.revenue/1e6).toFixed(1)}M | Staff: ${prev.staff}`);
+  }
+
+  for (const [tabKey, label] of [['general', 'All Portfolio'], ['ai', 'AI Companies'], ['web3', 'Web3 Companies']]) {
+    const names26 = new Set((gData[tabKey] || []).map(c => c.fields['Company Name']));
+    const names25 = new Set((gData25[tabKey] || []).map(c => c.fields['Company Name']));
+    const added = [...names26].filter(n => !names25.has(n)).sort().map(n => `${n} (${gBatchMap[n] || '?'})`);
+    const removed = [...names25].filter(n => !names26.has(n)).sort().map(n => `${n} (${gBatchMap[n] || '?'})`);
+    if (added.length || removed.length) {
+      let diff = `\n## ${label} — Changes (25H1 → 26H1)`;
+      diff += `\n25H1: ${names25.size} companies | 26H1: ${names26.size} companies (net ${names26.size >= names25.size ? '+' : ''}${names26.size - names25.size})`;
+      if (added.length) diff += `\nAdded in 26H1 (${added.length}): ${added.join(', ')}`;
+      if (removed.length) diff += `\nNot in 26H1 / removed (${removed.length}): ${removed.join(', ')}`;
+      sections.push(diff);
+    }
+  }
+
+  const general = gData.general || [];
+
+  const hqCounts = {};
+  general.forEach(c => {
+    const hq = getHQ(c);
+    hqCounts[hq] = (hqCounts[hq] || 0) + 1;
+  });
+  const marketLines = Object.entries(hqCounts).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k}: ${v}`).join(', ');
+  sections.push(`\n## Market Breakdown (by HQ)\n${marketLines}`);
+
+  const lines = [];
+  general.forEach(c => {
+    const f = c.fields;
+    const name = f['Company Name'] || '?';
+    const batch = gBatchMap[name] || '';
+    const aiLabel = f['AI Label'];
+    const aiTag = aiLabel ? (typeof aiLabel === 'object' && aiLabel.name ? aiLabel.name : String(aiLabel)) : '';
+    const latest = gLatestLookup[name];
+    const updated = latest ? latest.hasUpdate : false;
+    const aiReason = latest ? latest.aiReasoning : '';
+    const r = f['Latest Raised'], v = f['Latest Valuation'], rev = f['Latest Revenue'], s = f['Latest Staff'];
+    const h = gH1Lookup[name];
+    let line = `${name} | ${batch} | AI:${aiTag || 'none'}${aiReason ? ' (' + aiReason + ')' : ''} | upd:${updated ? 'Y' : 'N'} | R:${r ?? '-'} V:${v ?? '-'} Rev:${rev ?? '-'} S:${s ?? '-'}`;
+    if (h) line += ` | 25H1 R:${h.raised ?? '-'} V:${h.valuation ?? '-'} Rev:${h.revenue ?? '-'} S:${h.staff ?? '-'}`;
+    lines.push(line);
+  });
+  sections.push(`\n## Per-Company Data (Name | Batch | AI label + reasoning | upd=Y/N | 26H1 metrics | 25H1 metrics)\nAI field: "AI-native", "AI-enabled", or "none". Reasoning explains why. upd:Y = confirmed fresh 26H1 data, upd:N = may be stale.\n${lines.join('\n')}`);
+
+  return sections.join('\n');
+}
+
+function simpleMarkdown(text) {
+  let html = text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/^[\-\*] (.+)$/gm, '<li>$1</li>')
+    .replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>\n?)+/gs, m => `<ul>${m}</ul>`);
+  html = html.split(/\n{2,}/).map(p => {
+    p = p.trim();
+    if (!p || p.startsWith('<ul>') || p.startsWith('<ol>')) return p;
+    return `<p>${p}</p>`;
+  }).join('');
+  html = html.replace(/\n/g, '<br>');
+  return html;
+}
+
+function appendMessage(role, content) {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `chat-msg chat-msg-${role}`;
+  const inner = document.createElement('div');
+  inner.className = 'chat-msg-content';
+  if (role === 'assistant') {
+    inner.innerHTML = simpleMarkdown(content);
+  } else {
+    inner.textContent = content;
+  }
+  div.appendChild(inner);
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return inner;
+}
+
+let chatHistory = [];
+let chatStreaming = false;
+
+async function sendChatMessage() {
+  const apiKey = ANTHROPIC_KEY;
+
+  const input = document.getElementById('chatInput');
+  const userMsg = input.value.trim();
+  if (!userMsg) return;
+  input.value = '';
+
+  appendMessage('user', userMsg);
+  chatHistory.push({ role: 'user', content: userMsg });
+
+  const sendBtn = document.getElementById('chatSend');
+  sendBtn.disabled = true;
+  chatStreaming = true;
+
+  const thinkingDiv = appendMessage('assistant', '');
+  thinkingDiv.innerHTML = '<span style="color:var(--text-muted);font-style:italic">Thinking…</span>';
+
+  try {
+    const systemPrompt = buildChatContext();
+
+    console.group(`%c[Chatbot] Q: "${userMsg}"`, 'color:#ee7a2f;font-weight:bold;font-size:13px');
+    console.log('%c── Data Summary ──', 'color:#6b6560;font-weight:bold');
+    console.table({
+      'General companies': gData.general.length,
+      'AI companies': gData.ai.length,
+      'Web3 companies': gData.web3.length,
+      '25H1 General': gData25.general.length,
+      '25H1 AI': gData25.ai.length,
+      '25H1 Web3': gData25.web3.length,
+      'Companies in latestLookup': Object.keys(gLatestLookup).length,
+      'Companies in h1Lookup': Object.keys(gH1Lookup).length,
+    });
+    console.log('%c── System Prompt (sent to Claude) ──', 'color:#6b6560;font-weight:bold');
+    console.log(systemPrompt);
+    console.log('%c── Messages sent ──', 'color:#6b6560;font-weight:bold');
+    console.log(JSON.parse(JSON.stringify(chatHistory.slice(-20))));
+    console.log(`Prompt length: ${systemPrompt.length} chars | Messages: ${chatHistory.slice(-20).length}`);
+    console.groupEnd();
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1024,
+        system: systemPrompt,
+        messages: chatHistory.slice(-20),
+        stream: true,
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error?.message || `HTTP ${res.status}`);
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let fullText = '';
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const data = line.slice(6);
+        if (data === '[DONE]') continue;
+        try {
+          const evt = JSON.parse(data);
+          if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta') {
+            fullText += evt.delta.text;
+            thinkingDiv.innerHTML = simpleMarkdown(fullText);
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+          }
+        } catch (_) {}
+      }
+    }
+
+    if (!fullText) fullText = '(No response)';
+    thinkingDiv.innerHTML = simpleMarkdown(fullText);
+    chatHistory.push({ role: 'assistant', content: fullText });
+
+    console.group(`%c[Chatbot] Response for: "${userMsg}"`, 'color:#16a34a;font-weight:bold');
+    console.log(fullText);
+    console.groupEnd();
+
+  } catch (err) {
+    thinkingDiv.innerHTML = `<span style="color:var(--red)">Error: ${err.message}</span>`;
+  } finally {
+    sendBtn.disabled = false;
+    chatStreaming = false;
+    document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+  }
+}
+
+function toggleChatPanel() {
+  const panel = document.getElementById('chatPanel');
+  const fab = document.getElementById('chatFab');
+  const isOpen = !panel.classList.contains('hidden');
+  if (isOpen) {
+    panel.classList.add('hidden');
+    fab.classList.remove('hidden');
+  } else {
+    panel.classList.remove('hidden');
+    fab.classList.add('hidden');
+    document.getElementById('chatInput').focus();
+  }
+}
+
+function enableChat() {
+  chatDataLoaded = true;
+  const fab = document.getElementById('chatFab');
+  fab.disabled = false;
+  fab.title = 'Ask AI about the data';
+}
+
+document.getElementById('chatFab').addEventListener('click', () => {
+  if (chatDataLoaded) toggleChatPanel();
+});
+
+document.getElementById('chatClose').addEventListener('click', toggleChatPanel);
+
+document.getElementById('chatSend').addEventListener('click', () => {
+  if (!chatStreaming) sendChatMessage();
+});
+
+document.getElementById('chatInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey && !chatStreaming) {
+    e.preventDefault();
+    sendChatMessage();
   }
 });
 </script>
