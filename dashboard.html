@@ -1191,13 +1191,21 @@ function filterCompanies(records, { skipOnFilter = false } = {}) {
   return { filtered, debug: { total: records.length, onPassCount, batchPassCount, bothPassCount: filtered.length, unmatchedBatchSample: Array.from(unmatchedBatchNames).sort().slice(0, 8) } };
 }
 
-function filterAI(companies) {
+function filterAI(companies, { strict = true, requireHighConfidence = false } = {}) {
   return companies.filter(c => {
-    let label = c.fields['AI Label'];
+    let label = c.fields['Strict AI Label'];
     if (!label) return false;
     if (Array.isArray(label)) label = label[0];
-    const name = normalizeText(typeof label === 'object' && label.name ? label.name : label).toLowerCase();
-    return name === 'ai-native' || name === 'ai-enabled';
+    const labelVal = normalizeText(typeof label === 'object' && label.name ? label.name : label).toLowerCase();
+    if (labelVal !== 'ai') return false;
+    if (requireHighConfidence) {
+      let conf = c.fields['Strict AI Label Confidence'];
+      if (!conf) return false;
+      if (Array.isArray(conf)) conf = conf[0];
+      const confVal = normalizeText(typeof conf === 'object' && conf.name ? conf.name : conf).toLowerCase();
+      if (confVal !== 'high') return false;
+    }
+    return true;
   });
 }
 
@@ -1247,7 +1255,7 @@ function buildPeriodLookup(statsRecords, idToName, period) {
     if (f['Period'] !== period) continue;
     const name = resolveLinkedName(f, idToName);
     if (!name) continue;
-    map[name] = { raised: f['Total Raised'] ?? null, valuation: f['Valuation'] ?? null, revenue: f['Revenue'] ?? null, staff: f['Staff'] ?? null, hasUpdate: !!f['Has Update'], aiReasoning: f['AI Label Reasoning'] || '' };
+    map[name] = { raised: f['Total Raised'] ?? null, valuation: f['Valuation'] ?? null, revenue: f['Revenue'] ?? null, staff: f['Staff'] ?? null, hasUpdate: !!f['Has Update'], aiReasoning: f['AI Progress Reasoning'] || '' };
   }
   return map;
 }
@@ -1275,7 +1283,9 @@ function buildCompaniesFromStats(statsRecords, idToName, hqMap, period) {
         'Company Name': name,
         'On': onVal,
         'Batch': batchArr,
-        'AI Label': (period === '26H1' ? f['AI Label'] : f['AI-Label (from 26H1)']) || '',
+        'AI Label': (period === '26H1' ? f['AI Progress Label'] : f['Strict AI Label (from 26H1)']) || '',
+        'Strict AI Label': f['Strict AI Label'] || '',
+        'Strict AI Label Confidence': f['Strict AI Label Confidence'] || '',
         'Company Verticals': vertArr,
         'HQ': hqMap[name] || '',
         'Latest Raised': f['Total Raised'] ?? null,
@@ -1587,7 +1597,8 @@ async function loadDashboard() {
 
     const statsRaw = await fetchAllRecords(apiKey, STATS_TABLE, [
       'Company Name', 'Period', 'Total Raised', 'Valuation', 'Revenue', 'Staff',
-      'Has Update', 'AI Label Reasoning', 'AI Label', 'AI-Label (from 26H1)',
+      'Has Update', 'AI Progress Reasoning', 'AI Progress Label', 'Strict AI Label (from 26H1)',
+      'Strict AI Label', 'Strict AI Label Confidence',
       'On (from Company Name)', 'Batch (from Company Name)', 'Company Verticals (from Company Name)'
     ]);
 
@@ -1605,7 +1616,7 @@ async function loadDashboard() {
     const latestLookup = buildPeriodLookup(statsRaw, idToName, '26H1');
     const batchMap = buildBatchMap(companies);
 
-    const aiCompanies = filterAI(companies);
+    const aiCompanies = filterAI(companies, { requireHighConfidence: true });
     const web3Companies = filterWeb3(companies);
     const ai25 = filterAI(companies25);
     const web325 = filterWeb3(companies25);
